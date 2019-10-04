@@ -29,13 +29,13 @@ class Alert {
 
   /// Alert constructor
   ///
-  /// [context], [title] are required.
+  /// [context] are required.
   Alert({
     @required this.context,
     this.type,
     this.style = const AlertStyle(),
     this.image,
-    @required this.title,
+    this.title,
     this.desc,
     this.content,
     this.buttons,
@@ -92,14 +92,17 @@ class Alert {
                         child: Column(
                           children: <Widget>[
                             _getImage(),
-                            SizedBox(
-                              height: 15,
-                            ),
-                            Text(
-                              title,
-                              style: style.titleStyle,
-                              textAlign: TextAlign.center,
-                            ),
+                            if(title != null)
+                              ...[
+                                SizedBox(
+                                  height: 15,
+                                ),
+                                Text(
+                                  title,
+                                  style: style.titleStyle,
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
                             SizedBox(
                               height: desc == null ? 5 : 10,
                             ),
@@ -163,7 +166,8 @@ class Alert {
                   child: InkWell(
                     onTap: () {
                       Navigator.pop(context);
-                      closeFunction();
+                      if(closeFunction != null)
+                        closeFunction();
                     },
                   ),
                 ),
